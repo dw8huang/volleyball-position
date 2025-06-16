@@ -4,49 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Defense Positions</title>
-  <style>
-    table { 
-      border-collapse: collapse; 
-      width: 100%; 
-    }
-    th, td {
-      border: 1px solid #999;
-      padding: 8px;
-      text-align: center;
-    }
-
-    /* highlight whole unit on hover */
-    td[data-unit].highlight {
-      background-color: #eef;
-    }
-    td[data-unit] {
-      cursor: pointer;
-    }
-
-    /* Enlarged preview container */
-    #preview {
-      margin-top: 1em;
-      width: 80vw;
-      max-width: 1200px;
-      /* height will expand with image */
-      border: 1px solid #ccc;
-      overflow: hidden;
-    }
-    #preview img {
-      width: 100%;
-      height: auto;
-      display: none;
-      /* optional: smooth transition */
-      transition: opacity 0.3s ease;
-      opacity: 0;
-    }
-    #preview img.visible {
-      display: block;
-      opacity: 1;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Instruction banner -->
+  <div id="intro">
+    👋 Welcome! Click any cell with a black border to display the corresponding drill diagram.
+  </div>
 
   <table>
     <thead>
@@ -100,8 +64,8 @@
       </tr>
       <tr>
         <th>S or RS</th>
-        <td data-unit="1">get tips</td>
-        <td data-unit="2">get tips</td>
+        <td data-unit="1">tips</td>
+        <td data-unit="2">tips</td>
         <td data-unit="3">tips</td>
         <td data-unit="4">tips</td>
         <td data-unit="5">tips</td>
@@ -114,44 +78,6 @@
     <img id="preview-img" src="" alt="drill diagram">
   </div>
 
-  <script>
-    const unitImages = {
-      1: 'images/block-line_twoBlocks_noGap.png',
-      2: 'images/block-line_twoBlocks_hasGap.png',
-      3: 'images/block-line_oneBlock.png',
-      4: 'images/block-cross_twoBlocks_noGap.png',
-      5: 'images/block-cross_twoBlocks_hasGap.png',
-      6: 'images/block-cross_oneBlock.png'
-    };
-
-    const previewImg = document.getElementById('preview-img');
-
-    document.querySelectorAll('td[data-unit]').forEach(cell => {
-      const unit = cell.dataset.unit;
-
-      cell.addEventListener('mouseenter', () => {
-        document.querySelectorAll(`td[data-unit="${unit}"]`)
-          .forEach(c => c.classList.add('highlight'));
-      });
-      cell.addEventListener('mouseleave', () => {
-        document.querySelectorAll(`td[data-unit="${unit}"]`)
-          .forEach(c => c.classList.remove('highlight'));
-      });
-
-      cell.addEventListener('click', () => {
-        const src = unitImages[unit];
-        if (!src) return;
-        previewImg.src = src;
-        previewImg.classList.add('visible');
-      });
-    });
-
-    document.body.addEventListener('click', e => {
-      if (!e.target.matches('td[data-unit]')) {
-        previewImg.classList.remove('visible');
-      }
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>

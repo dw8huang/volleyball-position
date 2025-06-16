@@ -1,0 +1,86 @@
+/* ===== RESET & BASE ===== */
+body {
+    font-family: sans-serif;
+    margin: 1em;
+  }
+  table {
+    width: 100%;
+    border-collapse: separate;   /* allow independent shadows */
+    border-spacing: 0;
+  }
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #999;      /* light grid */
+    position: relative;           /* for pseudo-element */
+  }
+  
+  /* ===== INTRO BANNER ===== */
+  #intro {
+    background: #f0f8ff;
+    border: 1px solid #99c;
+    padding: 12px;
+    margin-bottom: 1em;
+    border-radius: 4px;
+  }
+  
+  /* ===== GROUP OUTLINE ===== */
+  /* Remove any old thick borders on interactive cells */
+  td[data-unit] {
+    border: 1px solid #999;      /* keep grid */
+  }
+  
+  /* Create a full-cell overlay that can draw the group box */
+  td[data-unit]::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* vertical edges for every cell */
+    box-shadow:
+      inset -3px  0 0 0 #000,
+       inset  3px  0 0 0 #000;
+    pointer-events: none;
+  }
+  
+  /* Top edge on the first row of the group */
+  tbody tr:first-child td[data-unit]::before {
+    box-shadow:
+      inset -3px  0 0 0 #000,  /* left */
+       inset  3px  0 0 0 #000,  /* right */
+       inset  0   3px 0 0 #000; /* top */
+  }
+  
+  /* Bottom edge on the last row of the group */
+  tbody tr:last-child td[data-unit]::before {
+    box-shadow:
+      inset -3px   0 0 0 #000,  /* left */
+       inset  3px   0 0 0 #000,  /* right */
+       inset  0  -3px 0 0 #000;  /* bottom */
+  }
+  
+  /* ===== HOVER & CLICK PREVIEW ===== */
+  td[data-unit] {
+    cursor: pointer;
+  }
+  td[data-unit].highlight {
+    background-color: #eef;
+  }
+  
+  #preview {
+    margin-top: 1em;
+    width: 80vw;
+    max-width: 1200px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+  }
+  #preview img {
+    width: 100%;
+    height: auto;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  #preview img.visible {
+    display: block;
+    opacity: 1;
+  }
