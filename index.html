@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Volleyball Table</title>
+  <style>
+    table { 
+      border-collapse: collapse; 
+      width: 100%; 
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+
+    /* highlight whole unit on hover */
+    td[data-unit].highlight {
+      background-color: #eef;
+    }
+    td[data-unit] {
+      cursor: pointer;
+    }
+
+    /* Enlarged preview container */
+    #preview {
+      margin-top: 1em;
+      width: 80vw;
+      max-width: 1200px;
+      /* height will expand with image */
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+    #preview img {
+      width: 100%;
+      height: auto;
+      display: none;
+      /* optional: smooth transition */
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+    #preview img.visible {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <table>
+    <thead>
+      <tr>
+        <th rowspan="3"></th>
+        <th colspan="3">Block line</th>
+        <th colspan="3">Block cross</th>
+      </tr>
+      <tr>
+        <th colspan="2">two blocks</th>
+        <th>one block</th>
+        <th colspan="2">two blocks</th>
+        <th>one block</th>
+      </tr>
+      <tr>
+        <th>no gap</th>
+        <th>has gap</th>
+        <th></th>
+        <th>no gap</th>
+        <th>has gap</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>front row OH</th>
+        <td data-unit="1">pos 4 – small cross or roll</td>
+        <td data-unit="2">pos 4 – small cross or roll</td>
+        <td data-unit="3">pos 4 – small cross or roll</td>
+        <td data-unit="4">pos 4 – small cross or roll</td>
+        <td data-unit="5">pos 4 – small cross or roll</td>
+        <td data-unit="6">pos 4 – small cross or roll</td>
+      </tr>
+      <tr>
+        <th>L</th>
+        <td data-unit="1">pos 5 closer to 6 – long cross</td>
+        <td data-unit="2">pos 5 closer to 6 – long cross</td>
+        <td data-unit="3">pos 5 closer to 6 – long cross</td>
+        <td data-unit="4">pos 5 closer to 6 – long cross, touchout</td>
+        <td data-unit="5">pos 5 closer to 6 – gap, move forward, long cross</td>
+        <td data-unit="6">pos 5 closer to 6 – long cross</td>
+      </tr>
+      <tr>
+        <th>back row OH</th>
+        <td data-unit="1">pos 6 closer to 1 – touch out</td>
+        <td data-unit="2">pos 6 closer to 1 – gap</td>
+        <td data-unit="3">pos 6 closer to 1 – next to block, potential high roll in pos 1</td>
+        <td data-unit="4">pos 1 – get line ball, touchout</td>
+        <td data-unit="5">pos 1 – get line ball, touchout</td>
+        <td data-unit="6">pos 1 – get line ball, touchout</td>
+      </tr>
+      <tr>
+        <th>S or RS</th>
+        <td data-unit="1">get tips</td>
+        <td data-unit="2">get tips</td>
+        <td data-unit="3">tips</td>
+        <td data-unit="4">tips</td>
+        <td data-unit="5">tips</td>
+        <td data-unit="6">tips</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="preview">
+    <img id="preview-img" src="" alt="drill diagram">
+  </div>
+
+  <script>
+    const unitImages = {
+      1: 'images/block-line_twoBlocks_noGap.png',
+      2: 'images/block-line_twoBlocks_hasGap.png',
+      3: 'images/block-line_oneBlock.png',
+      4: 'images/block-cross_twoBlocks_noGap.png',
+      5: 'images/block-cross_twoBlocks_hasGap.png',
+      6: 'images/block-cross_oneBlock.png'
+    };
+
+    const previewImg = document.getElementById('preview-img');
+
+    document.querySelectorAll('td[data-unit]').forEach(cell => {
+      const unit = cell.dataset.unit;
+
+      cell.addEventListener('mouseenter', () => {
+        document.querySelectorAll(`td[data-unit="${unit}"]`)
+          .forEach(c => c.classList.add('highlight'));
+      });
+      cell.addEventListener('mouseleave', () => {
+        document.querySelectorAll(`td[data-unit="${unit}"]`)
+          .forEach(c => c.classList.remove('highlight'));
+      });
+
+      cell.addEventListener('click', () => {
+        const src = unitImages[unit];
+        if (!src) return;
+        previewImg.src = src;
+        previewImg.classList.add('visible');
+      });
+    });
+
+    document.body.addEventListener('click', e => {
+      if (!e.target.matches('td[data-unit]')) {
+        previewImg.classList.remove('visible');
+      }
+    });
+  </script>
+
+</body>
+</html>
