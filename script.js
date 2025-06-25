@@ -4,7 +4,8 @@ const unitImages = {
     3: 'images/block-line_oneBlock.png',
     4: 'images/block-cross_twoBlocks_noGap.png',
     5: 'images/block-cross_twoBlocks_hasGap.png',
-    6: 'images/block-cross_oneBlock.png'
+    6: 'images/block-cross_oneBlock.png',
+    7: 'images/CK_front_row.png'
   };
   
   const previewImg = document.getElementById('preview-img');
